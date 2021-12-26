@@ -43,6 +43,9 @@ class CliffWalkingEnv(discrete.DiscreteEnv):
         # Calculate transition probabilities
         P = {}
         for s in range(nS):
+            # Making the Q-table
+            # Q-table mane Quality table
+            # Which stores the reward of an Action given a State
             position = np.unravel_index(s, self.shape)
             P[s] = {a: [] for a in range(nA)}
             # UP = 0
@@ -56,6 +59,7 @@ class CliffWalkingEnv(discrete.DiscreteEnv):
 
         # We always start in state (3, 0)
         isd = np.zeros(nS)
+        # isd tells us the player position?
         isd[np.ravel_multi_index((3, 0), self.shape)] = 1.0
 
         super(CliffWalkingEnv, self).__init__(nS, nA, P, isd)
@@ -65,6 +69,9 @@ class CliffWalkingEnv(discrete.DiscreteEnv):
         return np.asarray(list(converted), dtype=np.float32)
 
     def reset(self):
+        # self.s = current state
+        # Using reset, initializes or resets
+        # the state to (3,0)
         self.s = np.argmax(self.isd)
         return self._convert_state(self.s)
 
